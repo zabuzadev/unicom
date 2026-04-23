@@ -1,60 +1,219 @@
-
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ciclo de Vida do Cliente — Unicom Digital</title>
 <style>
-  *{box-sizing:border-box;margin:0;padding:0}
-  body{font-family:var(--font-sans)}
-  .phase{border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);overflow:hidden;margin-bottom:1.5rem}
-  .phase-header{padding:.75rem 1.25rem;display:flex;align-items:center;gap:10px}
-  .phase-badge{font-size:11px;font-weight:500;padding:3px 10px;border-radius:20px;letter-spacing:.03em;white-space:nowrap}
-  .phase-title{font-size:15px;font-weight:500;color:var(--color-text-primary)}
-  .phase-sub{font-size:12px;color:var(--color-text-secondary);margin-left:auto;white-space:nowrap}
-  .steps{padding:0 1.25rem 1rem}
-  .step{margin-left:.5rem;padding:.5rem 0 .5rem 1rem;position:relative;border-left:2px solid var(--color-border-tertiary)}
-  .step:last-child{border-left-color:transparent}
-  .step::before{content:'';position:absolute;left:-5px;top:.6rem;width:8px;height:8px;border-radius:50%;border:2px solid var(--color-border-secondary);background:var(--color-background-primary)}
-  .step-row{display:flex;align-items:flex-start;gap:8px;flex-wrap:wrap}
-  .step-name{font-size:13px;font-weight:500;color:var(--color-text-primary);flex:1;min-width:160px}
-  .pill{font-size:11px;padding:2px 8px;border-radius:10px;white-space:nowrap;line-height:1.6}
-  .pill-r{background:var(--color-background-info);color:var(--color-text-info)}
-  .pill-a{background:var(--color-background-warning);color:var(--color-text-warning)}
-  .pill-i{background:#F1EFE8;color:#444441}
-  .pill-p{background:var(--color-background-secondary);color:var(--color-text-secondary)}
-  .pill-c{background:#EEEDFE;color:#3C3489}
-  .step-desc{font-size:12px;color:var(--color-text-secondary);margin-top:3px;line-height:1.5}
-  .roles-box{background:var(--color-background-secondary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);padding:.6rem .9rem;margin-top:6px}
-  .roles-box .role-row{display:flex;align-items:flex-start;gap:6px;margin-bottom:4px;font-size:12px;color:var(--color-text-secondary)}
-  .roles-box .role-row:last-child{margin-bottom:0}
-  .roles-box .role-name{font-weight:500;color:var(--color-text-primary);min-width:90px}
-  .internal-tag{font-size:10px;padding:1px 7px;border-radius:8px;background:#E1F5EE;color:#0F6E56;margin-left:4px;vertical-align:middle}
-  .client-tag{font-size:10px;padding:1px 7px;border-radius:8px;background:#FAECE7;color:#993C1D;margin-left:4px;vertical-align:middle}
-  .legend{display:flex;gap:16px;padding:.75rem 1.25rem;border-top:0.5px solid var(--color-border-tertiary);background:var(--color-background-secondary);flex-wrap:wrap}
-  .leg-item{display:flex;align-items:center;gap:5px;font-size:12px;color:var(--color-text-secondary)}
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-  .p1 .phase-header{background:#EEEDFE}
-  .p1 .phase-badge{background:#AFA9EC;color:#26215C}
-  .p1 .step{border-left-color:#CECBF6}
-  .p1 .step::before{border-color:#7F77DD}
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: #f5f4f0;
+    color: #1a1a18;
+    padding: 2rem 1rem;
+    line-height: 1.5;
+  }
 
-  .p2 .phase-header{background:#E1F5EE}
-  .p2 .phase-badge{background:#5DCAA5;color:#04342C}
-  .p2 .step{border-left-color:#9FE1CB}
-  .p2 .step::before{border-color:#1D9E75}
+  .container { max-width: 860px; margin: 0 auto; }
 
-  .p3 .phase-header{background:#FFF8EC}
-  .p3 .phase-badge{background:#EF9F27;color:#412402}
-  .p3 .step{border-left-color:#FAC775}
-  .p3 .step::before{border-color:#BA7517}
+  h1 {
+    font-size: 20px;
+    font-weight: 600;
+    color: #1a1a18;
+    margin-bottom: 2rem;
+    line-height: 1.3;
+  }
 
-  .p4 .phase-header{background:#FAECE7}
-  .p4 .phase-badge{background:#D85A30;color:#4A1B0C}
-  .p4 .step{border-left-color:#F5C4B3}
-  .p4 .step::before{border-color:#993C1D}
+  /* PHASE CARD */
+  .phase {
+    background: #ffffff;
+    border: 0.5px solid #d6d4cc;
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 1.5rem;
+  }
+
+  .phase-header {
+    padding: .75rem 1.25rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .phase-badge {
+    font-size: 11px;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 20px;
+    letter-spacing: .03em;
+    white-space: nowrap;
+  }
+
+  .phase-title {
+    font-size: 15px;
+    font-weight: 500;
+    color: #1a1a18;
+  }
+
+  .phase-sub {
+    font-size: 12px;
+    color: #6b6a64;
+    margin-left: auto;
+    white-space: nowrap;
+  }
+
+  /* PHASE COLORS */
+  .p1 .phase-header { background: #EEEDFE; }
+  .p1 .phase-badge  { background: #AFA9EC; color: #26215C; }
+  .p1 .step         { border-left-color: #CECBF6; }
+  .p1 .step::before { border-color: #7F77DD; }
+
+  .p2 .phase-header { background: #E1F5EE; }
+  .p2 .phase-badge  { background: #5DCAA5; color: #04342C; }
+  .p2 .step         { border-left-color: #9FE1CB; }
+  .p2 .step::before { border-color: #1D9E75; }
+
+  .p3 .phase-header { background: #FFF8EC; }
+  .p3 .phase-badge  { background: #EF9F27; color: #412402; }
+  .p3 .step         { border-left-color: #FAC775; }
+  .p3 .step::before { border-color: #BA7517; }
+
+  .p4 .phase-header { background: #FAECE7; }
+  .p4 .phase-badge  { background: #D85A30; color: #4A1B0C; }
+  .p4 .step         { border-left-color: #F5C4B3; }
+  .p4 .step::before { border-color: #993C1D; }
+
+  /* STEPS */
+  .steps { padding: 0 1.25rem 1rem; }
+
+  .step {
+    border-left: 2px solid #d6d4cc;
+    margin-left: .5rem;
+    padding: .6rem 0 .6rem 1rem;
+    position: relative;
+  }
+
+  .step:last-child { border-left-color: transparent; }
+
+  .step::before {
+    content: '';
+    position: absolute;
+    left: -5px;
+    top: .75rem;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    border: 2px solid #999;
+    background: #ffffff;
+  }
+
+  .step-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 6px;
+    flex-wrap: wrap;
+    margin-bottom: 4px;
+  }
+
+  .step-name {
+    font-size: 13px;
+    font-weight: 600;
+    color: #1a1a18;
+    flex: 1;
+    min-width: 160px;
+  }
+
+  .step-desc {
+    font-size: 12px;
+    color: #6b6a64;
+    line-height: 1.55;
+    margin-top: 2px;
+  }
+
+  /* PILLS */
+  .pill {
+    font-size: 11px;
+    padding: 2px 8px;
+    border-radius: 10px;
+    white-space: nowrap;
+    line-height: 1.7;
+    font-weight: 500;
+  }
+
+  .pill-r  { background: #dbeafe; color: #1e40af; }
+  .pill-a  { background: #fef3c7; color: #92400e; }
+  .pill-i  { background: #f1efe8; color: #444441; }
+  .pill-p  { background: #f0efeb; color: #6b6a64; }
+  .pill-c  { background: #EEEDFE; color: #3C3489; }
+
+  .tag-interno  { font-size: 10px; padding: 1px 7px; border-radius: 8px; background: #E1F5EE; color: #0F6E56; margin-left: 4px; font-weight: 500; }
+  .tag-cliente  { font-size: 10px; padding: 1px 7px; border-radius: 8px; background: #FAECE7; color: #993C1D; margin-left: 4px; font-weight: 500; }
+
+  /* ROLES BOX */
+  .roles-box {
+    background: #f8f7f3;
+    border: 0.5px solid #d6d4cc;
+    border-radius: 8px;
+    padding: .6rem .9rem;
+    margin-top: 6px;
+  }
+
+  .role-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    margin-bottom: 4px;
+    font-size: 12px;
+    color: #6b6a64;
+  }
+
+  .role-row:last-child { margin-bottom: 0; }
+
+  .role-name {
+    font-weight: 600;
+    color: #1a1a18;
+    min-width: 110px;
+    flex-shrink: 0;
+  }
+
+  /* LEGEND */
+  .legend {
+    display: flex;
+    gap: 16px;
+    padding: .75rem 1.25rem;
+    border-top: 0.5px solid #d6d4cc;
+    background: #f8f7f3;
+    flex-wrap: wrap;
+  }
+
+  .leg-item {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 12px;
+    color: #6b6a64;
+  }
+
+  .leg-note {
+    font-size: 12px;
+    color: #6b6a64;
+    font-style: italic;
+  }
+
+  @media (max-width: 600px) {
+    .phase-sub { margin-left: 0; width: 100%; }
+    h1 { font-size: 17px; }
+  }
 </style>
+</head>
+<body>
+<div class="container">
 
-<h2 class="sr-only">Ciclo de vida completo do cliente Unicom Digital — 4 fases com processos, responsáveis e prazos</h2>
+<h1>Ciclo de vida completo do cliente Unicom Digital — 4 fases com processos, responsáveis e prazos</h1>
 
-<div style="padding:1rem 0">
-
-<!-- FASE 1 -->
+<!-- ═══════════════════════════════════════════ FASE 1 -->
 <div class="phase p1">
   <div class="phase-header">
     <span class="phase-badge">Fase 1</span>
@@ -65,7 +224,7 @@
 
     <div class="step">
       <div class="step-row">
-        <span class="step-name">Fechamento comercial <span class="client-tag">com cliente</span></span>
+        <span class="step-name">Fechamento comercial <span class="tag-cliente">com cliente</span></span>
         <span class="pill pill-r">R: Diretor</span>
         <span class="pill pill-a">A: Diretor</span>
         <span class="pill pill-p">Dia 0</span>
@@ -75,7 +234,7 @@
 
     <div class="step">
       <div class="step-row">
-        <span class="step-name">Handoff comercial → GP <span class="internal-tag">interno</span></span>
+        <span class="step-name">Handoff comercial → GP <span class="tag-interno">interno</span></span>
         <span class="pill pill-r">R: Diretor</span>
         <span class="pill pill-a">A: GP</span>
         <span class="pill pill-p">Dia 1</span>
@@ -90,7 +249,7 @@
 
     <div class="step">
       <div class="step-row">
-        <span class="step-name">Call de onboarding com o cliente <span class="client-tag">com cliente</span></span>
+        <span class="step-name">Call de onboarding com o cliente <span class="tag-cliente">com cliente</span></span>
         <span class="pill pill-r">R: GP</span>
         <span class="pill pill-a">A: Diretor</span>
         <span class="pill pill-c">+ Gestora de Contas</span>
@@ -108,7 +267,7 @@
 
     <div class="step">
       <div class="step-row">
-        <span class="step-name">Setup técnico das plataformas <span class="internal-tag">interno</span></span>
+        <span class="step-name">Setup técnico das plataformas <span class="tag-interno">interno</span></span>
         <span class="pill pill-r">R: Gestora de Contas</span>
         <span class="pill pill-a">A: Diretor</span>
         <span class="pill pill-i">I: GP</span>
@@ -119,7 +278,7 @@
 
     <div class="step">
       <div class="step-row">
-        <span class="step-name">Setup do board no Monday <span class="internal-tag">interno</span></span>
+        <span class="step-name">Setup do board no Monday <span class="tag-interno">interno</span></span>
         <span class="pill pill-r">R: Community Manager</span>
         <span class="pill pill-a">A: GP</span>
         <span class="pill pill-p">Dias 3–5</span>
@@ -129,7 +288,7 @@
 
     <div class="step">
       <div class="step-row">
-        <span class="step-name">Kick-off interno da conta <span class="internal-tag">interno</span></span>
+        <span class="step-name">Kick-off interno da conta <span class="tag-interno">interno</span></span>
         <span class="pill pill-r">R: GP</span>
         <span class="pill pill-a">A: Diretor</span>
         <span class="pill pill-p">Dia 5</span>
@@ -139,7 +298,7 @@
 
     <div class="step">
       <div class="step-row">
-        <span class="step-name">Primeiro planejamento de conteúdo <span class="internal-tag">interno</span></span>
+        <span class="step-name">Primeiro planejamento de conteúdo <span class="tag-interno">interno</span></span>
         <span class="pill pill-r">R: Account Manager</span>
         <span class="pill pill-a">A: Diretora/Copy</span>
         <span class="pill pill-p">Dias 6–10</span>
@@ -149,7 +308,7 @@
 
     <div class="step">
       <div class="step-row">
-        <span class="step-name">Período de validação e ajuste <span class="internal-tag">interno</span></span>
+        <span class="step-name">Período de validação e ajuste <span class="tag-interno">interno</span></span>
         <span class="pill pill-r">R: GP + Account Manager</span>
         <span class="pill pill-a">A: Diretor</span>
         <span class="pill pill-p">Dias 10–30</span>
@@ -159,16 +318,16 @@
 
   </div>
   <div class="legend">
-    <span class="leg-item"><span class="pill pill-r">R</span>Responsável</span>
-    <span class="leg-item"><span class="pill pill-a">A</span>Aprovador</span>
-    <span class="leg-item"><span class="pill pill-c">+ Função</span>Participa</span>
-    <span class="leg-item"><span class="pill pill-i">I</span>Informado</span>
-    <span class="leg-item"><span class="internal-tag">interno</span>Sem cliente</span>
-    <span class="leg-item"><span class="client-tag">com cliente</span>Cliente presente</span>
+    <span class="leg-item"><span class="pill pill-r">R</span> Responsável</span>
+    <span class="leg-item"><span class="pill pill-a">A</span> Aprovador</span>
+    <span class="leg-item"><span class="pill pill-c">+ Função</span> Participa</span>
+    <span class="leg-item"><span class="pill pill-i">I</span> Informado</span>
+    <span class="leg-item"><span class="tag-interno">interno</span> Sem cliente</span>
+    <span class="leg-item"><span class="tag-cliente">com cliente</span> Cliente presente</span>
   </div>
 </div>
 
-<!-- FASE 2 -->
+<!-- ═══════════════════════════════════════════ FASE 2 -->
 <div class="phase p2">
   <div class="phase-header">
     <span class="phase-badge">Fase 2</span>
@@ -270,7 +429,7 @@
   </div>
 </div>
 
-<!-- FASE 3 -->
+<!-- ═══════════════════════════════════════════ FASE 3 -->
 <div class="phase p3">
   <div class="phase-header">
     <span class="phase-badge">Fase 3</span>
@@ -342,7 +501,7 @@
   </div>
 </div>
 
-<!-- FASE 4 -->
+<!-- ═══════════════════════════════════════════ FASE 4 -->
 <div class="phase p4">
   <div class="phase-header">
     <span class="phase-badge">Fase 4</span>
@@ -403,8 +562,10 @@
 
   </div>
   <div class="legend">
-    <span class="leg-item" style="color:var(--color-text-secondary);font-size:12px">A fase 4 retroalimenta a fase 2 — o ciclo recomeça com dados, não com intuição</span>
+    <span class="leg-note">A fase 4 retroalimenta a fase 2 — o ciclo recomeça com dados, não com intuição</span>
   </div>
 </div>
 
 </div>
+</body>
+</html>
