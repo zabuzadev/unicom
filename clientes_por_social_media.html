@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Carteiras — Unicom Digital</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: #f5f4f0;
+    color: #1a1a18;
+    padding: 2rem 1rem;
+    line-height: 1.5;
+  }
+
+  .container { max-width: 900px; margin: 0 auto; }
+
+  h1 {
+    font-size: 20px;
+    font-weight: 600;
+    color: #1a1a18;
+    margin-bottom: .25rem;
+  }
+
+  .subtitle {
+    font-size: 13px;
+    color: #6b6a64;
+    margin-bottom: 2rem;
+  }
+
+  /* SUMMARY BAR */
+  .summary {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 10px;
+    margin-bottom: 2rem;
+  }
+
+  .stat-card {
+    background: #fff;
+    border: 0.5px solid #d6d4cc;
+    border-radius: 10px;
+    padding: .875rem 1rem;
+  }
+
+  .stat-label {
+    font-size: 11px;
+    color: #6b6a64;
+    margin-bottom: 4px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: .04em;
+  }
+
+  .stat-value {
+    font-size: 24px;
+    font-weight: 500;
+    color: #1a1a18;
+  }
+
+  .stat-sub {
+    font-size: 11px;
+    color: #6b6a64;
+    margin-top: 2px;
+  }
+
+  /* SM CARD */
+  .sm-card {
+    background: #fff;
+    border: 0.5px solid #d6d4cc;
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 1.5rem;
+  }
+
+  .sm-header {
+    padding: .875rem 1.25rem;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border-bottom: 0.5px solid #d6d4cc;
+  }
+
+  .sm-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+    font-weight: 600;
+    flex-shrink: 0;
+    color: #fff;
+  }
+
+  .sm-info { flex: 1; }
+  .sm-name { font-size: 15px; font-weight: 600; color: #1a1a18; }
+  .sm-role { font-size: 12px; color: #6b6a64; margin-top: 1px; }
+
+  .sm-badge {
+    font-size: 11px;
+    font-weight: 600;
+    padding: 4px 12px;
+    border-radius: 20px;
+    white-space: nowrap;
+  }
+
+  /* CLIENT LIST */
+  .client-grid {
+    padding: 1rem 1.25rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 8px;
+  }
+
+  .client-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: .625rem .875rem;
+    background: #f8f7f3;
+    border: 0.5px solid #d6d4cc;
+    border-radius: 8px;
+    transition: border-color .15s;
+    cursor: default;
+  }
+
+  .client-item:hover {
+    border-color: #aaa;
+    background: #f3f2ee;
+  }
+
+  .client-num {
+    font-size: 10px;
+    font-weight: 700;
+    color: #9b9a94;
+    min-width: 18px;
+    text-align: right;
+    flex-shrink: 0;
+  }
+
+  .client-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .client-info { flex: 1; min-width: 0; }
+
+  .client-name {
+    font-size: 12px;
+    font-weight: 500;
+    color: #1a1a18;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .client-spec {
+    font-size: 11px;
+    color: #6b6a64;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .client-tag {
+    font-size: 10px;
+    padding: 1px 6px;
+    border-radius: 6px;
+    font-weight: 500;
+    flex-shrink: 0;
+  }
+
+  /* SM FOOTER */
+  .sm-footer {
+    padding: .625rem 1.25rem;
+    border-top: 0.5px solid #d6d4cc;
+    background: #f8f7f3;
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  .foot-stat {
+    font-size: 11px;
+    color: #6b6a64;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .foot-stat strong { color: #1a1a18; font-weight: 600; }
+
+  /* LEGEND */
+  .legend-bar {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 1.5rem;
+    padding: .75rem 1rem;
+    background: #fff;
+    border: 0.5px solid #d6d4cc;
+    border-radius: 10px;
+  }
+
+  .leg-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    color: #6b6a64;
+  }
+
+  .leg-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+  }
+
+  /* SECTION divider */
+  .divider {
+    font-size: 10px;
+    font-weight: 700;
+    color: #9b9a94;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    padding: 0 1.25rem .5rem;
+  }
+
+  /* SPECIALTY COLORS */
+  .spec-med   { background: #EEEDFE; color: #3C3489; }
+  .spec-gin   { background: #FBEAF0; color: #72243E; }
+  .spec-ped   { background: #E1F5EE; color: #085041; }
+  .spec-onco  { background: #FCEBEB; color: #791F1F; }
+  .spec-uro   { background: #E6F1FB; color: #0C447C; }
+  .spec-other { background: #F1EFE8; color: #444441; }
+
+  @media (max-width: 600px) {
+    .client-grid { grid-template-columns: 1fr; }
+    .summary { grid-template-columns: repeat(2, 1fr); }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <h1>Carteiras — Gestoras de Contas</h1>
+  <p class="subtitle">Unicom Digital · distribuição atual de clientes por Social Media</p>
+
+  <!-- SUMMARY -->
+  <div class="summary">
+    <div class="stat-card">
+      <div class="stat-label">Total de clientes</div>
+      <div class="stat-value">29</div>
+      <div class="stat-sub">ativos na carteira</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Carteira Mariáh</div>
+      <div class="stat-value">15</div>
+      <div class="stat-sub">clientes · 52%</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Carteira Yasmin</div>
+      <div class="stat-value">14</div>
+      <div class="stat-sub">clientes · 48%</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Média por SM</div>
+      <div class="stat-value">14,5</div>
+      <div class="stat-sub">clientes / pessoa</div>
+    </div>
+  </div>
+
+  <!-- LEGEND -->
+  <div class="legend-bar">
+    <span style="font-size:11px;font-weight:600;color:#1a1a18;margin-right:4px">Especialidades</span>
+    <span class="leg-item"><span class="leg-dot" style="background:#7F77DD"></span> Médico geral</span>
+    <span class="leg-item"><span class="leg-dot" style="background:#D4537E"></span> Ginecologia</span>
+    <span class="leg-item"><span class="leg-dot" style="background:#1D9E75"></span> Pediatria</span>
+    <span class="leg-item"><span class="leg-dot" style="background:#E24B4A"></span> Oncologia</span>
+    <span class="leg-item"><span class="leg-dot" style="background:#378ADD"></span> Urologia</span>
+    <span class="leg-item"><span class="leg-dot" style="background:#888780"></span> Outros</span>
+  </div>
+
+  <!-- ═══════════════════════════════ MARIÁH ═══════════════════════════════ -->
+  <div class="sm-card">
+    <div class="sm-header">
+      <div class="sm-avatar" style="background:#1C2B4A">MR</div>
+      <div class="sm-info">
+        <div class="sm-name">Mariáh</div>
+        <div class="sm-role">Gestora de Contas · Account Manager</div>
+      </div>
+      <span class="sm-badge" style="background:#EEEDFE;color:#3C3489">15 clientes</span>
+    </div>
+
+    <div class="divider" style="padding-top:.875rem">Clientes da carteira</div>
+
+    <div class="client-grid">
+
+      <div class="client-item">
+        <span class="client-num">01</span>
+        <span class="client-dot" style="background:#1D9E75"></span>
+        <div class="client-info">
+          <div class="client-name">Mimo Pediatria</div>
+          <div class="client-spec">Pediatria</div>
+        </div>
+        <span class="client-tag spec-ped">Ped</span>
+      </div>
+
+      <div class="client-item">
+        <span class="client-num">02</span>
+        <span class="client-dot" style="background:#1D9E75"></span>
+        <div class="client-info">
+          <div class="client-name">Dra. Kaline Pediatra</div>
+          <div class="client-spec">Pediatria</div>
+        </div>
+        <span class="client-tag spec-ped">Ped</span>
+      </div>
+
+      <div class="client-item">
+        <span class="client-num">03</span>
+        <span class="client-dot" style="background:#7F77DD"></span>
+        <div class="client-info">
+          <div class="client-name">Ortoimagem</div>
+          <div class="client-spec">Ortopedia</div>
+        </div>
+        <span class="client-tag spec-med">Orto</span>
+      </div>
+
+      <div class="client-item">
+        <span class="client-num">04</span>
+        <span class="client-dot" style="background:#E24B4A"></span>
+        <div class="client-info">
+          <div class="client-name">Supera Oncologia</div>
+          <div class="client-spec">Oncologia</div>
+        </div>
+        <span class="client-tag spec-onco">Onco</span>
+      </div>
+
+      <div class="client-item">
+        <span class="client-num">05</span>
+        <span class="client-dot" style="background:#E24B4A"></span>
+        <div class="client-info">
+          <div class="client-name">Dr. Cristiano Vendrame</div>
+          <div class="client-spec">Cirurgia Oncológica</div>
+        </div>
+        <span class="client-tag spec-onco">Onco</span>
+      </div>
+
+      <div class="client-item">
+        <span class="client-num">06</span>
+        <span class="client-dot" style="background:#378ADD"></span>
+        <div class="client-info">
+          <div class="client-name">Dr. Vicente C. Neto</div>
+          <div class="client-spec">Urologia</div>
+        </div>
+        <span class="client-tag spec-uro">Uro</span>
+      </div>
+
+      <div class="client-item">
+        <span class="client-num">07</span>
+        <span class="client-dot" style="background:#7F77DD"></span>
+        <div class="client-info">
+          <div class="client-name">Sinergia Radioterapia</div>
+          <div class="client-spec">Radioterapia</div>
+        </div>
+        <span class="client-tag spec-med">Radio</span>
+      </div>
+
+      <div class="client-item">
+        <span class="client-num">08</span>
+        <span class="client-dot" style="background:#378ADD"></span>
+        <div class="client-info">
+          <div class="client-name">Urologia Provida</div>
+          <div class="client-spec">Urologia</div>
+        </div>
+        <span class="client-tag spec-uro">Uro</span>
+      </div>
+
+      <div class="client-item">
+        <span class="client-num">09</span>
+        <span class="client-dot" style="background:#D4537E"></span>
+        <div class="client-info">
+          <div class="client-name">Saúde da Mulher Provida</div>
+          <div class="client-spec">Ginecologia</div>
+        </div>
+        <span class="client-tag spec-gin">Gin</span>
+      </div>
+
+      <div class="client-item">
+        <span class="client-num">10</span>
+        <span class="client-dot" style="background:#D4537E"></span>
+        <div class="client-info">
+          <div class="client-name">Dra. Angela Bergamo</div>
+          <div class="client-spec">Ginecologia</div>
+        </div>
+        <span class="client-tag spec-gin">Gin</span>
+      </div>
+
+      <div class="client-item">
+        <span class="client-num">11</span>
+        <span class="client-dot" style="background:#D4537E"></span>
+        <div class="client-info">
+          <div class="client-name">Afeto Ginecologia</div>
+          <div class="client-spec">Ginecologia</div>
+        </div>
+        <span class="client-tag spec-gin">Gin</span>
+      </div>
+
+      <div class="client-item">
+        <span class="client-num">12</span>
+        <span class="client-dot" style="background:#D4537E"></span>
+        <div class="client-info">
+          <div class="client-name">Dr. Juliano Esbissigo</div>
+          <div class="client-spec">Cir. Ginecológico</div>
+        </div>
+        <span class="client-tag spec-gin">Gin</span>
+      </div>
+
+      <div class="client-item">
+        <span class="client-num">13</span>
+        <span class="client-dot" style="background:#7F77DD"></span>
+        <div class="client-info">
+          <div class="client-name">Dr. Guilherme Buchen</div>
+          <div class="client-spec">Coloproctologia</div>
+        </div>
+        <span class="client-tag spec-med">Colop</span>
+      </div>
+
+      <div class="client-item">
+        <span class="client-num">14</span>
+        <span class="client-dot" style="background:#D4537E"></span>
+        <div class="client-info">
+          <div class="client-name">Dr. Charles Souza</div>
+          <div class="client-spec">Cir. Ginecológico</div>
+        </div>
+        <span class="client-tag spec-gin">Gin</span>
+      </div>
+
+      <div class="client-item">
+        <span class="client-num">15</span>
+        <span class="client-dot" style="background:#D4537E"></span>
+        <div class="client-info">
+          <div class="client-name">Dra. Carine Psendziuk</div>
+          <div class="client-spec">Ginecologia</div>
+        </div>
+        <span class="client-tag spec-gin">Gin</span>
+      </div>
+
+    </div>
+
+    <div class="sm-footer">
+      <span class="foot-stat"><strong>6</strong> ginecologia / cir. gin.</span>
+      <span class="foot-stat"><strong>2</strong> pediatria</span>
+      <span class="foot-stat"><strong>2</strong> urologia</span>
+      <span class="foot-stat"><strong>2</strong> oncologia</span>
+      <span class="foot-stat"><strong>1</strong> ortopedia</span>
+      <span class="foot-stat"><strong>1</strong> radioterapia</span>
+      <span class="foot-stat"><strong>1</strong> coloproctologia</span>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════ YASMIN ═══════════════════════════════ -->
+  <div class="sm-card">
+    <div class="sm-header">
+      <div class="sm-avatar" style="background:#D85A30">YS</div>
+      <div class="sm-info">
+        <div class="sm-name">Yasmin</div>
+        <div class="sm-role">Gestora de Contas · Analista de Conteúdo</div>
+      </div>
+      <span class="sm-badge" style="background:#FAECE7;color:#993C1D">14 clientes</span>
+    </div>
+
+    <div class="divider" style="padding-top:.875rem">Clientes da carteira</div>
+
+    <div class="client-grid">
+
+      <div class="client-item">
+        <span class="client-num">01</span>
+        <span class="client-dot" style="background:#D4537E"></span>
+        <div class="client-info">
+          <div class="client-name">Dra. Morgana F. Chiella</div>
+          <div class="client-spec">Ginecologia</div>
+        </div>
+        <span class="client-tag spec-gin">Gin</span>
+      </div>
+
+      <div class="client-item">
+        <span class="client-num">02</span>
+        <span class="client-dot" style="background:#7F77DD"></span>
+        <div class="client-info">
+          <div class="client-name">Clínica Catarinense Otorrino</div>
+          <div class="client-spec">Otorrinolaringologia</div>
+        </div>
+        <span class="client-tag spec-med">Otorro</span>
+      </div>
+
+      <div class="client-item">
+        <span class="client-num">03</span>
+        <span class="client-dot" style="background:#1D9E75"></span>
+        <div class="client-info">
+          <div class="client-name">Dra. Júlia de Oliveira</div>
+          <div class="client-spec">Pneumopediatria</div>
+        </div>
+        <span class="client-tag spec-ped">Pneumo</span>
+      </div>
+
+      <div class="client-item">
+        <span class="client-num">04</span>
+        <span class="client-dot" style="background:#7F77DD"></span>
+        <div class="client-info">
+          <div class="client-name">Clínica Neurológica</div>
+          <div class="client-spec">Neurologia</div>
+        </div>
+        <span class="client-tag spec-med">Neuro</span>
+      </div>
+
+      <div class="client-item">
+        <span class="client-num">05</span>
+        <span class="client-dot" style="background:#D4537E"></span>
+        <div class="client-info">
+          <div class="client-name">Centro de Endometriose Provida</div>
+          <div class="client-spec">Ginecologia / Endometriose</div>
+        </div>
+        <span class="client-tag spec-gin">Gin</span>
+      </div>
+
+      <div class="client-item">
+        <span class="client-num">06</span>
+        <span class="client-dot" style="background:#888780"></span>
+        <div class="client-info">
+          <div class="client-name">Arkhos Arq. Hospitalar</div>
+          <div class="client-spec">Arquitetura Hospitalar</div>
+        </div>
+        <span class="client-tag spec-other">Arq</span>
+      </div>
+
+      <div class="client-item">
+        <span class="client-num">07</span>
+        <span class="client-dot" style="background:#E24B4A"></span>
+        <div class="client-info">
+          <div class="client-name">Dra. Eloisa Acorsi</div>
+          <div class="client-spec">Oncologia Clínica · maio</div>
+        </div>
+        <span class="client-tag spec-onco">Onco</span>
+      </div>
+
+      <div class="client-item">
+        <span class="client-num">08</span>
+        <span class="client-dot" style="background:#E24B4A"></span>
+        <div class="client-info">
+          <div class="client-name">Dr. Cassiano Accordi</div>
+          <div class="client-spec">Cir. Oncológico</div>
+        </div>
+        <span class="client-tag spec-onco">Onco</span>
+      </div>
+
+      <div class="client-item">
+        <span class="client-num">09</span>
+        <span class="client-dot" style="background:#1D9E75"></span>
+        <div class="client-info">
+          <div class="client-name">Dra. Karen Favarin</div>
+          <div class="client-spec">Pediatria · abril</div>
+        </div>
+        <span class="client-tag spec-ped">Ped</span>
+      </div>
+
+      <div class="client-item">
+        <span class="client-num">10</span>
+        <span class="client-dot" style="background:#888780"></span>
+        <div class="client-info">
+          <div class="client-name">Raquel Ricken</div>
+          <div class="client-spec">Advocacia em Saúde</div>
+        </div>
+        <span class="client-tag spec-other">Jur</span>
+      </div>
+
+      <div class="client-item">
+        <span class="client-num">11</span>
+        <span class="client-dot" style="background:#888780"></span>
+        <div class="client-info">
+          <div class="client-name">Kerus Lanches</div>
+          <div class="client-spec">Alimentação</div>
+        </div>
+        <span class="client-tag spec-other">Food</span>
+      </div>
+
+      <div class="client-item">
+        <span class="client-num">12</span>
+        <span class="client-dot" style="background:#888780"></span>
+        <div class="client-info">
+          <div class="client-name">Flipper Hotel</div>
+          <div class="client-spec">Hotelaria</div>
+        </div>
+        <span class="client-tag spec-other">Hotel</span>
+      </div>
+
+      <div class="client-item">
+        <span class="client-num">13</span>
+        <span class="client-dot" style="background:#7F77DD"></span>
+        <div class="client-info">
+          <div class="client-name">Dra. Thayná Furtado</div>
+          <div class="client-spec">Otorrinolaringologia</div>
+        </div>
+        <span class="client-tag spec-med">Otorro</span>
+      </div>
+
+      <div class="client-item">
+        <span class="client-num">14</span>
+        <span class="client-dot" style="background:#7F77DD"></span>
+        <div class="client-info">
+          <div class="client-name">Dra. Rafaela</div>
+          <div class="client-spec">Medicina de Precisão</div>
+        </div>
+        <span class="client-tag spec-med">Med</span>
+      </div>
+
+    </div>
+
+    <div class="sm-footer">
+      <span class="foot-stat"><strong>2</strong> ginecologia</span>
+      <span class="foot-stat"><strong>2</strong> oncologia</span>
+      <span class="foot-stat"><strong>2</strong> otorrino</span>
+      <span class="foot-stat"><strong>2</strong> pediatria</span>
+      <span class="foot-stat"><strong>1</strong> neurologia</span>
+      <span class="foot-stat"><strong>1</strong> endometriose</span>
+      <span class="foot-stat"><strong>4</strong> outros</span>
+    </div>
+  </div>
+
+
+</div>
+</body>
+</html>
